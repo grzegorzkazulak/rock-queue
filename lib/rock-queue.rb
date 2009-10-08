@@ -23,13 +23,7 @@ module RockQueue
     
     def method_missing(sym, *args, &block)
        @adapter.send sym, *args, &block
-    send
+    end
   end
 end
 
-require 'rock-queue'
-rq = RockQueue::Base.new :beanstalkd, ['localhost:11300']
-# 
-# rq.receive do |queue_object|
-#    puts queue_object.message
-# end
