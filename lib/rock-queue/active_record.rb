@@ -10,6 +10,8 @@ module RockQueue
     module ClassMethods 
     end 
     module InstanceMethods 
+      def async(method, *args)
+      end
     end 
     
   end
