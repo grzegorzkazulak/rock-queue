@@ -11,7 +11,7 @@ module RockQueue
     attr_reader :obj
     
     def initialize(options = {})
-      @obj = Beanstalk::Pool.new(['localhost:11300'])
+      @obj = Beanstalk::Pool.new(["#{options[:server]}:#{options[:port]}"])
     end
   
     def receive

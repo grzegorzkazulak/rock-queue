@@ -1,21 +1,21 @@
-# begin
-#   require "beanstalk-client"
-# rescue
-#   puts "You need `beanstalk-client` gem to use the Beanstalkd rock-queue interface"
-#   exit
-# end
+begin
+  require 'resque'
+rescue
+  puts "You need `resque` gem to use the Resque rock-queue interface"
+  exit
+end
 
 module RockQueue
-  class Resque
+  class ResqueQueue
     
     attr_reader :obj
     
-    def initialize(options = {})
-      redis = {:host => "venus.dnc.pl", :port => 9999, :thread_safe => true}
+    def initialize(options)
+      Resque.redis = "#{options[:server]}:#{options[:port]}"
     end
     
-    def push(value, queue = 'default', options = {})
-      push(queue, value)
+    def push(value, options)
+      Resque.enqueue value
     end
   
     def receive
