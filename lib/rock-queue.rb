@@ -1,4 +1,5 @@
 require 'rock-queue/beanstalkd'
+require 'rock-queue/resque'
 
 module RockQueue
   attr_reader :adapter
@@ -8,11 +9,13 @@ module RockQueue
       case adapter
       when :beanstalkd
         @adapter = Beanstalkd.new(options)
+      when :resque
+        @adapter = Resque.new(options)
       end
     end
     
-    def put(value, *options)
-      raise ArgumentError
+    def push(value, *options)
+      @adapter.push(value, options)
     end
     
     def receive

@@ -5,7 +5,7 @@ require 'spec/rake/spectask'
 require 'date'
  
 GEM = "rock-queue"
-GEM_VERSION = "0.1.1"
+GEM_VERSION = "0.1.2"
 AUTHOR = "Grzegorz Kazulak"
 EMAIL = "gregorz.kazulak@gmail.com"
 HOMEPAGE = "http://github.com/grzegorzkazulak/rock-queue"
