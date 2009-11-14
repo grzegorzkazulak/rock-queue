@@ -1,16 +1,22 @@
-require 'rock-queue/beanstalkd'
-require 'rock-queue/resque'
+require 'lib/rock-queue/beanstalkd'
+require 'lib/rock-queue/resque'
 
 module RockQueue
   attr_reader :adapter
   
   class Base   
     def initialize(adapter, *options)
+      # Any better way to do this? :-)
+      options = options.first
+      if options.include?(:server) && options.include?(:port)
       case adapter
-      when :beanstalkd
-        @adapter = Beanstalkd.new(options)
-      when :resque
-        @adapter = Resque.new(options)
+        when :beanstalkd
+          @adapter = Beanstalkd.new(options)
+        when :resque
+          @adapter = ResqueQueue.new(options)
+      end
+      else
+        raise ArgumentError
       end
     end
     
@@ -29,4 +35,3 @@ module RockQueue
     end
   end
 end
-
