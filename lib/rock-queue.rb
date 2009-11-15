@@ -1,5 +1,11 @@
-require 'lib/rock-queue/beanstalkd'
-require 'lib/rock-queue/resque'
+require 'rock-queue/errors'
+
+require 'rock-queue/beanstalkd'
+require 'rock-queue/resque'
+
+require 'rock-queue/worker'
+
+require 'rock-queue/active_record'
 
 module RockQueue
   attr_reader :adapter
