@@ -3,6 +3,8 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'spec/rake/spectask'
 require 'date'
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
+require 'rock-queue/tasks'
  
 GEM = "rock-queue"
 GEM_VERSION = "0.1.2"
