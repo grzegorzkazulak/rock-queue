@@ -15,11 +15,18 @@ module RockQueue
     end
     
     def push(value, options)
+      if !defined?(value.queue)
+        value.class_eval do 
+          @queue = :default
+        end
+      end
       Resque.enqueue value
     end
   
-    def receive
-      loop
+    def receive(queue)
+      loop do
+        Resque.reserve queue        
+      end
     end 
   end
 end
