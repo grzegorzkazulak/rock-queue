@@ -1,8 +1,9 @@
 $:.unshift File.expand_path(File.dirname(__FILE__))
 
+require 'rock-queue/active_record_helper'
+
 module RockQueue
-  
-  autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
+
   autoload :Worker,                   'rock-queue/worker'
   autoload :Beanstalkd,               'rock-queue/adapters/beanstalkd'
   autoload :ResqueQueue,              'rock-queue/adapters/resque'
