@@ -8,10 +8,14 @@ module RockQueue
     end
     
     module ClassMethods 
+      def self.perform(id, method, *args)
+        find(id).send(method, *args)
+      end
     end 
+    
     module InstanceMethods 
       def async(method, *args)
-        RockQueue.push self, method, *args
+        RockQueue.push self, id, method, *args
       end
     end 
     
