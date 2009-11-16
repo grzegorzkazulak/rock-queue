@@ -1,7 +1,8 @@
+require 'rubygems'
 require 'sinatra/base'
 require 'erb'
 
-module Resque
+module RockQueue
   class Web < Sinatra::Base
     current_dir = File.dirname(File.expand_path(__FILE__))
     
