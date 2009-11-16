@@ -11,6 +11,7 @@ module RockQueue
     end 
     module InstanceMethods 
       def async(method, *args)
+        RockQueue.push self, method, *args
       end
     end 
     
