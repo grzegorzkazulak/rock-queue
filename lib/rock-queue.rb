@@ -39,7 +39,17 @@ module RockQueue
       @adapter.push(value, options)
     end
     
-    def receive
+    def receive(*options)
+      case adapter
+        when :beanstalkd
+          @adapter = Beanstalkd.new(options)
+        when :resque
+          @adapter.receive options[:queue] 
+      end
+
+      
+
+      
       if block_given?
         begin 
           yield @adapter.receive
