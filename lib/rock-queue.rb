@@ -5,8 +5,11 @@ require 'rock-queue/active_record_helper'
 module RockQueue
 
   autoload :Worker,                   'rock-queue/worker'
+  
+  # Adapters
   autoload :Beanstalkd,               'rock-queue/adapters/beanstalkd'
   autoload :ResqueQueue,              'rock-queue/adapters/resque'
+  autoload :DelayedJob,               'rock-queue/adapters/delayed_job'
   
   autoload :AdapterNotSupported,      'rock-queue/errors'
   autoload :NoClassError,             'rock-queue/errors'
@@ -17,13 +20,15 @@ module RockQueue
   class Base   
     def initialize(adapter, *options)
       # Any better way to do this? :-)
-      options = options.first
+      options = options.first unless options?
       if options.include?(:server) && options.include?(:port)
       case adapter
         when :beanstalkd
           @adapter = Beanstalkd.new(options)
         when :resque
           @adapter = ResqueQueue.new(options)
+        when :delayed_job
+          @adapter = DelayedJob.new(options)
       end
       else
         raise ArgumentError
