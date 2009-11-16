@@ -20,7 +20,7 @@ module RockQueue
   class Base   
     def initialize(adapter, *options)
       # Any better way to do this? :-)
-      options = options.first unless options?
+      options = options.first
       if options.include?(:server) && options.include?(:port)
       case adapter
         when :beanstalkd
