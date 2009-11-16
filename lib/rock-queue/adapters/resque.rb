@@ -23,10 +23,8 @@ module RockQueue
       Resque.enqueue value
     end
   
-    def receive(queue)
-      loop do
-        Resque.reserve queue        
-      end
+    def pop
+      Resque.reserve :default
     end 
   end
 end

@@ -52,7 +52,9 @@ module RockQueue
     def receive
       if block_given?
         begin 
-          yield @adapter.receive
+          loop do
+            yield @adapter.pop
+          end
         rescue Object => e
           # failed
         else

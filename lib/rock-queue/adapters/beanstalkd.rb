@@ -14,7 +14,7 @@ module RockQueue
       @obj = Beanstalk::Pool.new(["#{options[:server]}:#{options[:port]}"])
     end
   
-    def receive
+    def pop
       loop
     end 
   end
