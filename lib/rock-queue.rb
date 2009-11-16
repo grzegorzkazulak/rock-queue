@@ -1,10 +1,6 @@
 require 'rock-queue/errors'
-
-require 'rock-queue/beanstalkd'
-require 'rock-queue/resque'
-
+require 'rock-queue/adapters'
 require 'rock-queue/worker'
-
 require 'rock-queue/active_record'
 
 module RockQueue
