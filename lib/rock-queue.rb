@@ -1,9 +1,16 @@
-require 'rock-queue/errors'
-require 'rock-queue/adapters'
-require 'rock-queue/worker'
-require 'rock-queue/active_record'
+$:.unshift File.expand_path(File.dirname(__FILE__))
 
 module RockQueue
+  
+  autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
+  autoload :Worker,                   'rock-queue/worker'
+  autoload :Beanstalkd,               'rock-queue/adapters/beanstalkd'
+  autoload :ResqueQueue,              'rock-queue/adapters/resque'
+  
+  autoload :AdapterNotSupported,      'rock-queue/errors'
+  autoload :NoClassError,             'rock-queue/errors'
+  autoload :QueueingServerNotRunning, 'rock-queue/errors'
+  
   attr_reader :adapter
   
   class Base   
