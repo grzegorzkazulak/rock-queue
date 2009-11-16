@@ -3,6 +3,10 @@ $:.unshift File.expand_path(File.dirname(__FILE__))
 module RockQueue
 
   autoload :Config,                   'rock-queue/config'
+  
+  autoload :Notifiers,                'rock-queue/notifiers'
+  autoload :EmailNotifier,            'rock-queue/notifiers/email_notifier'
+  
   autoload :Worker,                   'rock-queue/worker'
   
   # Adapters

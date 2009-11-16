@@ -18,5 +18,13 @@ module RockQueue
       end
     end
     
+    def notifiers
+      if block_given?
+        yield Notifiers.instance
+      else
+        Notifiers.instance
+      end
+    end
+    
   end
 end
