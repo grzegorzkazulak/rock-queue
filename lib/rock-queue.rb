@@ -1,9 +1,8 @@
 $:.unshift File.expand_path(File.dirname(__FILE__))
 
-require 'rock-queue/active_record_helper'
-
 module RockQueue
 
+  autoload :Config,                   'rock-queue/config'
   autoload :Worker,                   'rock-queue/worker'
   
   # Adapters
@@ -14,6 +13,7 @@ module RockQueue
   autoload :AdapterNotSupported,      'rock-queue/errors'
   autoload :NoClassError,             'rock-queue/errors'
   autoload :QueueingServerNotRunning, 'rock-queue/errors'
+  autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
   
   attr_reader :adapter
   
