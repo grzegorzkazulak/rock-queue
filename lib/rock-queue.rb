@@ -18,7 +18,11 @@ module RockQueue
   attr_reader :adapter
   
   class Base   
+    
+    # Initializes the whole thing and makes the connection to the 
+    # queueing server using selected adapter (passed as lowercased symbol)
     def initialize(adapter, *options)
+      
       # Any better way to do this? :-)
       options = options.first
       if options.include?(:server) && options.include?(:port)
@@ -35,21 +39,17 @@ module RockQueue
       end
     end
     
+    # Pushes the value (in our case it should always be an object)
+    # onto the queue using previously selected adapter
     def push(value, *options)
       @adapter.push(value, options)
     end
     
-    def receive(*options)
-      case adapter
-        when :beanstalkd
-          @adapter = Beanstalkd.new(options)
-        when :resque
-          @adapter.receive options[:queue] 
-      end
-
-      
-
-      
+    # Pulls the data off the queue. There are two ways to do so:
+    # - Call receive with no block (gets you a single item)
+    # - Pass a block to it (creates and endles loop that constantly pulls items from the queue as they become available)
+    # All calls to the queueing server are made through the previosuly selected adaper.
+    def receive
       if block_given?
         begin 
           yield @adapter.receive
