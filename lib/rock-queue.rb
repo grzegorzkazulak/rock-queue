@@ -1,11 +1,15 @@
 $:.unshift File.expand_path(File.dirname(__FILE__))
 
+require 'rock-queue/active_record_helper'
+
 module RockQueue
-  
-  autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
+
   autoload :Worker,                   'rock-queue/worker'
+  
+  # Adapters
   autoload :Beanstalkd,               'rock-queue/adapters/beanstalkd'
   autoload :ResqueQueue,              'rock-queue/adapters/resque'
+  autoload :DelayedJob,               'rock-queue/adapters/delayed_job'
   
   autoload :AdapterNotSupported,      'rock-queue/errors'
   autoload :NoClassError,             'rock-queue/errors'
@@ -23,6 +27,8 @@ module RockQueue
           @adapter = Beanstalkd.new(options)
         when :resque
           @adapter = ResqueQueue.new(options)
+        when :delayed_job
+          @adapter = DelayedJob.new(options)
       end
       else
         raise ArgumentError
