@@ -10,8 +10,9 @@ class QueueObject
 
   # Add processing fail
   def add_fail(exception)
+    RockQueue::Notifiers.instance.notify(exception)
     @fails << exception
-    @fails.length <= 3
+    @fails.length == 3
   end
 
   # Get sleep time after fail
