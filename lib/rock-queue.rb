@@ -9,6 +9,7 @@ module RockQueue
   autoload :EmailNotifier,            'rock-queue/notifiers/email_notifier'
   
   autoload :Worker,                   'rock-queue/worker'
+  autoload :QueueObject,              'rock-queue/queue_object'
   
   # Adapters
   autoload :Beanstalkd,               'rock-queue/adapters/beanstalkd'
@@ -43,11 +44,13 @@ module RockQueue
       end
     end
     
+    
     # Pushes the value (in our case it should always be an object)
     # onto the queue using previously selected adapter
     def push(value, *options)
       @adapter.push(value, options)
     end
+    
     
     # Pulls the data off the queue. There are two ways to do so:
     # - Call receive with no block (gets you a single item)
@@ -55,20 +58,16 @@ module RockQueue
     # All calls to the queueing server are made through the previosuly selected adaper.
     def receive
       if block_given?
-        begin 
-          loop do
-            yield @adapter.pop
-          end
-        rescue Object => e
-          # failed
-        else
-          # job processed
-        end
+        yield QueueObject.new(@adapter.pop) 
+      else
+        raise 'No block given'
       end
     end
+    
     
     def method_missing(sym, *args, &block)
        @adapter.send sym, *args, &block
     end
+
   end
 end
