@@ -1,3 +1,5 @@
+require 'rock-queue'
+
 namespace :rock_queue do
   desc "Start a Rock Queue worker"
   task :work do
