@@ -108,7 +108,11 @@ TODO
 
 ### Failure handling
 	
-TODO	
+The worker will retry try to run the job again number of times (3 by default, but it is configurable).
+In the event of a last allowed failure worker will pass the exception information to all registered notifiers.
+
+RockQueue ships with email notifier. 
+*Important* If you are using an adapter for queueing library that provides similar mechanism consider disabling it. Otherwise you will most likely receive multiple notifications about the same error.
 
 	
 ### Credits
