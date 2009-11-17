@@ -5,8 +5,8 @@ module RockQueue
 
   autoload :Config,                   'rock-queue/config'
   
-  autoload :Notifiers,                'rock-queue/notifiers'
   autoload :AbstractNotifier,         'rock-queue/notifiers/abstract_notifier'
+  autoload :Notifiers,                'rock-queue/notifiers'
   autoload :EmailNotifier,            'rock-queue/notifiers/email_notifier'
   
   autoload :Worker,                   'rock-queue/worker'
@@ -59,7 +59,10 @@ module RockQueue
     # All calls to the queueing server are made through the previosuly selected adaper.
     def receive
       if block_given?
-        yield QueueObject.new(@adapter.pop) 
+        obj = @adapter.pop
+        if obj
+          yield QueueObject.new(obj)
+        end
       else
         raise 'No block given'
       end
