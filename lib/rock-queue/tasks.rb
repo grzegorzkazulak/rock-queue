@@ -5,7 +5,7 @@ namespace :rock_queue do
   task :work do
     worker = RockQueue::Worker.new
     worker.verbose = ENV['VERBOSE']
-    puts "*** Starting rock-queue worker #{worker}"
+    puts "=> Rock-queue worker initialized (#{worker})"
     worker.work
   end
 end

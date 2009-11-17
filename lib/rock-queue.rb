@@ -27,7 +27,6 @@ module RockQueue
     # Initializes the whole thing and makes the connection to the 
     # queueing server using selected adapter (passed as lowercased symbol)
     def initialize(adapter, *options)
-      
       # Any better way to do this? :-)
       options = options.first
       if options.include?(:server) && options.include?(:port)

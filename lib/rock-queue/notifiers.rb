@@ -13,11 +13,11 @@ module RockQueue
     end
     
     def register(instance)
-      available << instance
+      self.available << instance
     end
     
     def notify(message)
-      available.each do |notifier|
+      self.available.each do |notifier|
         notifier.notify(message)
       end
     end
