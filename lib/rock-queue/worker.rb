@@ -23,7 +23,9 @@ module RockQueue
               queue.object.perform
             rescue Object => e
               # Add failed processing and retry
-              retry if queue.add_fail(e)
+              if queue.add_fail(e)
+                sleep(queue.get_sleep_time)
+              end
             end
           end
         end

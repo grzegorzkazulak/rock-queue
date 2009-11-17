@@ -13,5 +13,10 @@ class QueueObject
     @fails << exception
     @fails.length <= 3
   end
+
+  # Get sleep time after fail
+  def get_sleep_time
+    2 ** ( @fails.length + 1 )
+  end
   
 end
