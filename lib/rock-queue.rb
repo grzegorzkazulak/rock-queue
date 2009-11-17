@@ -6,6 +6,7 @@ module RockQueue
   autoload :Config,                   'rock-queue/config'
   
   autoload :Notifiers,                'rock-queue/notifiers'
+  autoload :AbstractNotifier,         'rock-queue/notifiers/abstract_notifier'
   autoload :EmailNotifier,            'rock-queue/notifiers/email_notifier'
   
   autoload :Worker,                   'rock-queue/worker'

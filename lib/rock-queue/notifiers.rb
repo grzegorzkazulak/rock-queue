@@ -1,25 +1,14 @@
 module RockQueue
   class Notifiers
-    
-    # Return the instance
-    def self.instance
-      @__instance__ ||= new
-    end
-    
-    # Return registered notifiers
-    def self.available
-      @@_notifiers ||= []
-      @@_notifiers
-    end
+    include Observable 
     
     def register(instance)
-      self.available << instance
+      add_observer instance
     end
     
-    def notify(message)
-      self.available.each do |notifier|
-        notifier.notify(message)
-      end
+    def self.notify(message)
+      notify_observers message
+      p "lkiu"
     end
   end
 end
