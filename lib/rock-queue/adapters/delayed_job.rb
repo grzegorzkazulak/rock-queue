@@ -17,8 +17,8 @@ module RockQueue
       Delayed::Job.enqueue value
     end
   
-    def receive
-      loop
+    def pop
+      
     end 
   end
 end
