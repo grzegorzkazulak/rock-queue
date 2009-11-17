@@ -24,7 +24,10 @@ module RockQueue
     end
   
     def pop
-      Resque.reserve :default
+      job = Resque.reserve :default
+      if job
+        job.payload_class
+      end
     end 
   end
 end
