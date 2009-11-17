@@ -6,9 +6,10 @@ module RockQueue
     # Initialize connection to queue server
     def initialize 
       puts "=> Initializing..."
-      @queue = RockQueue::Base.new RockQueue::Config.settings.adapter, {
-        :server => RockQueue::Config.settings.host, 
-        :port   => RockQueue::Config.settings.port
+      config = RockQueue::Config.settings
+      @queue = RockQueue::Base.new config.adapter, {
+        :server => config.host, 
+        :port   => config.port
       }      
     end
     
@@ -23,9 +24,9 @@ module RockQueue
             begin
               p queue.class
               queue.object.perform
-            rescue Object => e
+            rescue Object => exception
               # Add failed processing and retry
-              retry if queue.add_fail(e)
+              retry if queue.add_fail(exception)
             end
           end
         end
