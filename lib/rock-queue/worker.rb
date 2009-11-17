@@ -5,15 +5,18 @@ module RockQueue
     
     # Initialize connection to queue server
     def initialize 
-      @queue = RockQueue::Base.new RockQueue::Config.settings.adapter, {
-        :server => RockQueue::Config.settings.host, 
-        :port   => RockQueue::Config.settings.port
+      puts "=> Initializing..."
+      config = RockQueue::Config.settings
+      @queue = RockQueue::Base.new config.adapter, {
+        :server => config.host, 
+        :port   => config.port
       }      
     end
     
     # Main worker loop where all jobs are beeing pulled of the queue. 
     # This is also a place where every job starts and ends it's lifecycle.
     def work
+      puts "=> Worker ready. Hold your horses!"
       loop do
         @queue.receive do |queue|
           if queue
