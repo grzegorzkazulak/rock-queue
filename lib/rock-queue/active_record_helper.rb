@@ -15,7 +15,8 @@ module RockQueue
     
     module InstanceMethods 
       def async(method, *args)
-        rq = RockQueue::Base.new RockQueue::Config.settings.adapter, {:server => RockQueue::Config.settings.host, :port => RockQueue::Config.settings.port}
+        config = RockQueue::Config.settings
+        rq = RockQueue::Base.new settings.adapter, {:server => config.host, :port => config.port}
         rq.push self.class, id, method, *args
       end
     end 
