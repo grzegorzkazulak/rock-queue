@@ -1,5 +1,3 @@
-require 'mail'
-
 module RockQueue
   
   class EmailNotifier < AbstractNotifier
@@ -10,7 +8,14 @@ module RockQueue
     
     # Notify by email  
     def update(message)
-      require 'mail'
+
+      begin
+        require 'mail'
+      rescue
+        puts "You need `mail` gem to use the Email Notifier"
+        exit
+      end
+      
       puts "Sending e-mail message: #{message}"
 
       Mail.defaults do
