@@ -7,7 +7,7 @@ module RockQueue
     end
     
     # Notify by email  
-    def update(message)
+    def update(error)
 
       begin
         require 'mail'
@@ -15,7 +15,7 @@ module RockQueue
         puts "You need `mail` gem to use the Email Notifier"
       end
       
-      puts "Sending e-mail message: #{message}"
+      puts "Sending e-mail message: #{error.message}"
 
       Mail.defaults do
         smtp do
@@ -24,16 +24,15 @@ module RockQueue
           user $server_config[:username]
           pass $server_config[:password] 
         end
-        
-
       end
 
       Mail.deliver do
           from $server_config[:from]
             to $server_config[:to]
-       subject 'Processing error'
-          body message.to_s
+       subject "Processing error - '#{error.message}''"
+          body error.backtrace.join("\n")
       end
+      
     end
 
   end
