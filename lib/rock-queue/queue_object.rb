@@ -10,7 +10,6 @@ module RockQueue
     def initialize(object)
       @object = object
       @fails = Array.new
-      config = RockQueue::Config.settings
     end
   
     # Add processing fail
