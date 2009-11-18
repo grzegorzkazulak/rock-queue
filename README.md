@@ -94,9 +94,16 @@ Rock-queue allows you to register endless number of notifiers using simple DSL w
 		config.host = "192.168.0.1"
 		config.port = 6379
 	
-		config.notifiers do |n|
-			n.register RockQueue::EmailNotifier.new(:server => "dsada", :port => 244, :username => "Dasda")
-		end
+	  config.notifiers do |n|
+	    n.register RockQueue::EmailNotifier.new(
+	      :server   => 'smtp.gmail.com', 
+	      :port     => 465, 
+	      :username => 'youraccount',
+	      :password => 'yourpassword',
+	      :from     => 'youraccount@gmail.com',
+	      :to       => 'recipient@example.com'
+	    )
+	  end
 	end
 	
 `register` takes an instance of your notifications mechanism. Every notifiaction class must contain only two methods: initialize and update.
@@ -117,5 +124,5 @@ RockQueue ships with email notifier.
 	
 ### Credits
 
-Grzegorz Kazulak <grzegorz.kazulak@gmail.com>
-Daniel Chruściak <daniel.chrusciak@dnc.pl>
+- Grzegorz Kazulak <grzegorz.kazulak@gmail.com>
+- Daniel Chruściak <daniel.chrusciak@dnc.pl>
