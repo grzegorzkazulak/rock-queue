@@ -13,7 +13,6 @@ module RockQueue
         require 'mail'
       rescue
         puts "You need `mail` gem to use the Email Notifier"
-        exit
       end
       
       puts "Sending e-mail message: #{message}"
