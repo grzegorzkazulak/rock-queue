@@ -22,13 +22,13 @@ module RockQueue
           if queue
             # code that actually performs the action
             begin
-              p queue.class
               queue.object.perform
             rescue Object => e
               # Add failed processing and retry
-              if !queue.add_fail(e)
+              if queue.add_fail(e)
                 puts "=> Processing fail! Retrying #{queue.fails.length}"
                 sleep(queue.get_sleep_time)
+                retry
               end
             end
           end
