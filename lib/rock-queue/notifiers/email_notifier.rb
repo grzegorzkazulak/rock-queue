@@ -1,5 +1,3 @@
-require 'mail'
-
 module RockQueue
   
   class EmailNotifier < AbstractNotifier
@@ -10,6 +8,7 @@ module RockQueue
     
     # Notify by email  
     def update(message)
+      require 'mail'
       puts "Sending e-mail message: #{message}"
 
       Mail.defaults do
