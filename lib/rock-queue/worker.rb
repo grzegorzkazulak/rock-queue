@@ -22,7 +22,7 @@ module RockQueue
           if queue
             # code that actually performs the action
             begin
-              queue.object.perform
+              queue.object.perform(queue.args)
             rescue Object => e
               # Add failed processing and retry
               if queue.add_fail(e)
