@@ -48,8 +48,8 @@ module RockQueue
     
     # Pushes the value (in our case it should always be an object)
     # onto the queue using previously selected adapter
-    def push(value, *options)
-      @adapter.push(value, options)
+    def push(value, *args)
+      @adapter.push(value, args)
     end
     
     
@@ -59,9 +59,9 @@ module RockQueue
     # All calls to the queueing server are made through the previosuly selected adaper.
     def receive
       if block_given?
-        obj = @adapter.pop
+        obj, args = @adapter.pop
         if obj
-          yield QueueObject.new(obj)
+          yield QueueObject.new(obj, args)
         end
       else
         raise 'No block given'

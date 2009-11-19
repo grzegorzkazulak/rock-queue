@@ -10,24 +10,26 @@ module RockQueue
     
     attr_reader :obj
     
+    # Contructor of Resque adapter
     def initialize(options)
       Resque.redis = "#{options[:server]}:#{options[:port]}"
     end
     
-    def push(value, options)
+    # Push item from Resque queue
+    def push(value, args)
       if !defined?(value.queue)
         value.class_eval do 
           @queue = :default
         end
       end
-      Resque.enqueue value
+      Resque.enqueue value, args
     end
-  
+
+    # Retrieve item from Resque queue
     def pop
       job = Resque.reserve :default
-      if job
-        job.payload_class
-      end
+      [job.payload_class, job.args] if job   
     end 
+    
   end
 end

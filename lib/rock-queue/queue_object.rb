@@ -5,11 +5,13 @@ module RockQueue
     
     DEFAULT_FAIL_LIMIT = 3
     
-    attr_reader :object, :fails
+    attr_reader :object, :args, :fails
     
-    def initialize(object)
+    # Constructor of queue objects wrapper
+    def initialize(object, args)
       @object = object
-      @fails = Array.new
+      @args   = args
+      @fails  = Array.new
     end
   
     # Add processing fail
