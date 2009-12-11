@@ -23,7 +23,7 @@ module RockQueue
             # code that actually performs the action
             begin
               args = queue.args.first
-              queue.object.perform(args[0], args[1], args)
+              args.empty? ? queue.object.perform : queue.object.perform(args)
             rescue Object => e
               # Add failed processing and retry
               if queue.add_fail(e)
