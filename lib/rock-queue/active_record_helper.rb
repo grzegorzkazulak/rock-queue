@@ -7,11 +7,14 @@ module RockQueue
       base.send(:include, InstanceMethods) 
     end
     
-    module ClassMethods 
-      def perform(id, method, *args)
+    module ClassMethods
+      def perform(*args)
+        args = args.first
+        id = args.shift
+        method = args.shift
         find(id).send(method, *args)
       end
-    end 
+    end
     
     module InstanceMethods 
       def async(method, *args)
