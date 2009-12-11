@@ -8,7 +8,7 @@ module RockQueue
     end
     
     module ClassMethods 
-      def self.perform(id, method, *args)
+      def perform(id, method, *args)
         find(id).send(method, *args)
       end
     end 
