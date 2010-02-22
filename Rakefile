@@ -7,7 +7,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 require 'rock-queue/tasks'
  
 GEM = "rock-queue"
-GEM_VERSION = "0.1.3"
+GEM_VERSION = "0.1.6"
 AUTHOR = "Grzegorz Kazulak"
 EMAIL = "gregorz.kazulak@gmail.com"
 HOMEPAGE = "http://github.com/grzegorzkazulak/rock-queue"
