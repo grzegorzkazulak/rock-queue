@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'spec/rake/spectask'
 require 'date'
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
+$LOAD_PATH.unshift 'lib'
 require 'rock-queue/tasks'
  
 GEM = "rock-queue"
@@ -33,6 +33,8 @@ end
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
+ 
+task :default => :test 
  
 desc "install the gem locally"
 task :install => [:package] do
