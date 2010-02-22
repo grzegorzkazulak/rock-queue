@@ -18,7 +18,7 @@ namespace :rock_queue do
     end
   end
 
-
+  desc "Stop a Rock Queue worker"
   task :stop do
     fork do
       if File.exists?(file_path)
