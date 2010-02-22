@@ -18,21 +18,23 @@ module RockQueue
     def work
       puts "=> Worker ready. Hold your horses!"
       loop do
-        begin
-          @queue.receive do |queue|
-            if queue
+        ActiveRecord::Base.verify_active_connections!
+        @queue.receive do |queue|
+          if queue
+            begin
               # code that actually performs the action
               args = queue.args.first
               puts "=> Processing class #{queue.object.name} with params: #{args.inspect}"
               args.empty? ? queue.object.perform : queue.object.perform(args)
+            rescue Object => e
+              # Add failed processing and retry
+              if queue.add_fail(e)
+                sleep(queue.get_sleep_time)
+                puts "=> Processing fail! Retrying #{queue.fails.length}"
+                puts "   Message: #{e.message}"
+                retry
+              end
             end
-          end
-        rescue Object => e
-          # Add failed processing and retry
-          if queue.add_fail(e)
-            sleep(queue.get_sleep_time)
-            puts "=> Processing fail! Retrying #{queue.fails.length}"
-            retry
           end
         end
       end
