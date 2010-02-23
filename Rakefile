@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'spec/rake/spectask'
 require 'date'
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
+$LOAD_PATH.unshift 'lib'
 require 'rock-queue/tasks'
  
 GEM = "rock-queue"
@@ -34,6 +34,8 @@ Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
  
+task :default => :test 
+ 
 desc "install the gem locally"
 task :install => [:package] do
   sh %{sudo gem install pkg/#{GEM}-#{GEM_VERSION}}
@@ -46,14 +48,12 @@ task :make_spec do
   end
 end
  
-desc "Run all examples (or a specific spec with TASK=spec/some_file.rb)"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_opts  = ["-cfs"]
-  t.spec_files = begin
-    if ENV["TASK"] 
-      ENV["TASK"].split(',').map { |task| "spec/**/#{task}_spec.rb" }
-    else
-      FileList['spec/**/*_spec.rb']
-    end
+desc "Run tests"
+task :test do
+  # Don't use the rake/testtask because it loads a new
+  # Ruby interpreter - we want to run tests with the current
+  # `rake` so our library manager still works
+  Dir['test/*_test.rb'].each do |f|
+    require f
   end
 end

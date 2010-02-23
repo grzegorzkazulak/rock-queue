@@ -1,5 +1,8 @@
 require 'rock-queue'
 
+# Fixme: This is bad, really bad =)
+RAILS_ROOT = '' unless defined?(RAILS_ROOT)
+
 namespace :rock_queue do
   desc "Start a Rock Queue worker"
 
@@ -15,7 +18,7 @@ namespace :rock_queue do
     end
   end
 
-
+  desc "Stop a Rock Queue worker"
   task :stop do
     fork do
       if File.exists?(file_path)
