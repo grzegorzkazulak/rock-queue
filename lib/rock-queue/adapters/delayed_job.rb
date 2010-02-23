@@ -1,7 +1,7 @@
 begin
   require "delayed_job"
 rescue
-  puts "You need `delayed_job` gem to use the Delayed Job rock-queue interface"
+  RockQueue::Base.logger.error "You need `delayed_job` gem to use the Delayed Job rock-queue interface"
   exit
 end
 

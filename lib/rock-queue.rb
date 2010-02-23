@@ -23,26 +23,30 @@ module RockQueue
   autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
   
   attr_reader :adapter
-  
+
+
   class Base   
-    
+
     # Initializes the whole thing and makes the connection to the 
     # queueing server using selected adapter (passed as lowercased symbol)
     def initialize(adapter, *options)
       # Any better way to do this? :-)
       options = options.first
       if options.include?(:server) && options.include?(:port)
-      case adapter
-        when :beanstalkd
-          @adapter = Beanstalkd.new(options)
-        when :resque
-          @adapter = ResqueQueue.new(options)
-        when :delayed_job
-          @adapter = DelayedJob.new(options)
-      end
+        case adapter
+          when :beanstalkd
+            @adapter = Beanstalkd.new(options)
+          when :resque
+            @adapter = ResqueQueue.new(options)
+          when :delayed_job
+            @adapter = DelayedJob.new(options)
+        end
       else
         raise ArgumentError
       end
+
+      # Initialize logger
+      @@logger = Logger.new(options[:log].nil? ? STDOUT : options[:log])
     end
     
     
@@ -60,18 +64,22 @@ module RockQueue
     def receive
       if block_given?
         obj, args = @adapter.pop
-        if obj
-          yield QueueObject.new(obj, args)
-        end
+        yield QueueObject.new(obj, args) if obj
       else
         raise 'No block given'
       end
     end
     
-    
+    # Calling adapter method
     def method_missing(sym, *args, &block)
-       @adapter.send sym, *args, &block
+      @adapter.send sym, *args, &block
+    end
+
+    # Returns Rock Queue logger
+    def self.logger
+      @@logger
     end
 
   end
+
 end

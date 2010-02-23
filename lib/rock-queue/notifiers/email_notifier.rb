@@ -12,10 +12,10 @@ module RockQueue
       begin
         require 'mail'
       rescue
-        puts "You need `mail` gem to use the Email Notifier"
+        RockQueue::Base.loggerRockQueue::logger.error "You need `mail` gem to use the Email Notifier"
       end
       
-      puts "Sending e-mail message: #{error.message}"
+      RockQueue::Base.logger.info "Sending e-mail message: #{error.message}"
 
       Mail.defaults do
         smtp do

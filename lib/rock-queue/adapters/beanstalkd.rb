@@ -1,7 +1,7 @@
 begin
   require "beanstalk-client"
 rescue
-  puts "You need `beanstalk-client` gem to use the Beanstalkd rock-queue interface"
+  RockQueue::Base.loggerRockQueue::logger.error "You need `beanstalk-client` gem to use the Beanstalkd rock-queue interface"
   exit
 end
 

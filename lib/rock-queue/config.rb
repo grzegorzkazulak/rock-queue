@@ -1,7 +1,7 @@
 module RockQueue
   class Config
     
-    attr_accessor :adapter, :host, :port
+    attr_accessor :adapter, :host, :port, :log
     
     # Return the instance
     def self.instance
