@@ -1,7 +1,7 @@
 begin
   require 'resque'
 rescue
-  RockQueue::Base.loggerRockQueue::logger.error "You need `resque` gem to use the Resque rock-queue interface"
+  RockQueue::Base.logger.error "You need `resque` gem to use the Resque rock-queue interface"
   exit
 end
 

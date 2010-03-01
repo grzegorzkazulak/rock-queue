@@ -12,7 +12,7 @@ module RockQueue
       begin
         require 'mail'
       rescue
-        RockQueue::Base.loggerRockQueue::logger.error "You need `mail` gem to use the Email Notifier"
+        RockQueue::Base.logger.error "You need `mail` gem to use the Email Notifier"
       end
       
       RockQueue::Base.logger.info "Sending e-mail message: #{error.message}"
