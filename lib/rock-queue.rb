@@ -74,6 +74,11 @@ module RockQueue
     def method_missing(sym, *args, &block)
       @adapter.send sym, *args, &block
     end
+    
+    # Register worker for web interface
+    def register_worker(worker)
+      @adapter.register_worker(worker) if @adapter.methods.include?(:register_worker)
+    end
 
     # Returns Rock Queue logger
     def self.logger

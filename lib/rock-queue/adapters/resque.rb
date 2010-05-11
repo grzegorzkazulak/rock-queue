@@ -24,12 +24,27 @@ module RockQueue
       end
       Resque.enqueue value, args
     end
+    
+    # Push items to Resque queue to be picked up by the worker on specified time
+    def push_at(value, time_to_run_at ,*args)
+      if !defined?(value.queue)
+        value.class_eval do 
+          @queue = :default
+        end
+      end
+      Resque.enqueue_at time_to_run_at, value, args
+    end    
 
     # Retrieve item from Resque queue
     def pop
       job = Resque.reserve :default
       [job.payload_class, job.args] if job   
     end 
+    
+    # Register worker for web interface
+    def register_worker(worker)
+      Resque.redis.sadd(:workers, worker)
+    end    
     
   end
 end
