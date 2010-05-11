@@ -1,1 +1,5 @@
 pkg
+.yardoc
+doc/
+documentation/
+test.rb
