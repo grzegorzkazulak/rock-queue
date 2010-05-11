@@ -2,12 +2,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rock-queue}
-  s.version = "0.1.8"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Grzegorz Kazulak"]
   s.autorequire = %q{rock-queue}
-  s.date = %q{2010-02-22}
+  s.date = %q{2010-05-11}
   s.description = %q{A unified interface for various messaging queues}
   s.email = %q{gregorz.kazulak@gmail.com}
   s.extra_rdoc_files = ["LICENSE"]
