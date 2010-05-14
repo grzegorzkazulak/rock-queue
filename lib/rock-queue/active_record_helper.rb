@@ -16,7 +16,7 @@ module RockQueue
       end
       
       def queue
-        :default
+        const_defined?(:QUEUE) ? self::QUEUE : :default
       end   
       
     end
