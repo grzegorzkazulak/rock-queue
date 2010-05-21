@@ -34,7 +34,7 @@ Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
  
-task :default => :test 
+task :default => :spec 
  
 desc "install the gem locally"
 task :install => [:package] do
@@ -56,4 +56,18 @@ task :test do
   Dir['test/*_test.rb'].each do |f|
     require f
   end
+end
+
+desc "Run all examples" 
+Spec::Rake::SpecTask.new('spec') do |t|
+  t.spec_opts  = ["-cfs"]
+  t.spec_files = FileList['spec/**/*_spec.rb']
+end
+
+desc "Run all examples with RCov"
+Spec::Rake::SpecTask.new('spec:rcov') do |t|
+  t.spec_opts  = ["-cfs"]
+  t.rcov = true
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.rcov_opts = ['--exclude spec,/home']
 end
