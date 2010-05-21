@@ -14,8 +14,17 @@ module RockQueue
       @obj = Beanstalk::Pool.new(["#{options[:server]}:#{options[:port]}"])
     end
   
+    def push(value, *args)
+      @obj.put [value.name, args].to_yaml 
+    end
+
     def pop
-      loop
+      r = YAML.load(@obj.reserve.body)
+      r[0] = Kernel.const_get(r[0])
+      r
     end 
+
+    def clear
+    end
   end
 end
