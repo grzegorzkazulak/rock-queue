@@ -36,11 +36,12 @@ describe "Object with ActiveRecordHelper" do
   end
 
   it "class responds to .perform" do
-    @post.class.perform([1, :title]).should == "Test"
+    @post.class.perform([@post.id, :title]).should == "Test"
   end
 
   it "calls a method asynchronously" do
     @post.async(:archive)
-    @post.instance_variable_get(:@rq).pop.should == [Post, [[1, "archive"]]]
+    rq = @post.instance_variable_get(:@rq)
+    rq.pop.should == [Post, [[@post.id, "archive"]]]
   end
 end
