@@ -4,6 +4,15 @@ module RockQueue
   
     def initialize(config)
       $server_config = config
+      
+      Mail.defaults do
+        delivery_method :smtp, {
+          :address        => $server_config[:server],
+          :port           => $server_config[:port],
+          :user_name      => $server_config[:username],
+          :password       => $server_config[:password]
+        }
+      end
     end
     
     # Notify by email  
@@ -17,19 +26,10 @@ module RockQueue
       
       RockQueue::Base.logger.info "Sending e-mail message: #{error.message}"
 
-      Mail.defaults do
-        smtp do
-          host $server_config[:server]
-          port $server_config[:port]
-          user $server_config[:username]
-          pass $server_config[:password] 
-        end
-      end
-
       Mail.deliver do
           from $server_config[:from]
             to $server_config[:to]
-       subject "Processing error - '#{error.message}''"
+       subject "Processing error - '#{error.message}'"
           body error.backtrace.join("\n")
       end
       
