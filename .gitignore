@@ -3,3 +3,5 @@ pkg
 doc/
 documentation/
 test.rb
+coverage/
+*.sw*
