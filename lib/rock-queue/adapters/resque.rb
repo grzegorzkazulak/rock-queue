@@ -46,5 +46,8 @@ module RockQueue
       Resque.redis.sadd(:workers, worker)
     end    
     
+    def clear
+      Resque.redis.del "queue: default"
+    end
   end
 end
