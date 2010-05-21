@@ -6,8 +6,5 @@ describe "ResqueQueue" do
     @adapter.clear
   end
 
-  it "pushes a job" do
-    @adapter.push TestJob, 1
-    @adapter.pop.should == [TestJob, [1]]
-  end
+  it_should_behave_like "RockQueue adapter"
 end
