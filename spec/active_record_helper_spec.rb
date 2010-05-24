@@ -9,6 +9,9 @@ end
 describe "Object with ActiveRecordHelper" do
   before(:each) do
     @post = Post.create(:title => "Test")
+    s = RockQueue::Config.settings
+    @rq = RockQueue::Base.new s.adapter, :server => s.host, :port => s.port
+    @rq.clear
   end
 
   it "class responds to .perform" do
@@ -17,7 +20,6 @@ describe "Object with ActiveRecordHelper" do
 
   it "calls a method asynchronously" do
     @post.async(:archive)
-    rq = @post.instance_variable_get(:@rq)
-    rq.pop.should == [Post, [[@post.id, "archive"]]]
+    @rq.pop.should == [Post, [[@post.id, "archive"]]]
   end
 end

@@ -9,6 +9,11 @@ class Post < ActiveRecord::Base
   include RockQueue::ActiveRecordHelper
 
   def archive
+    @archived = true
+  end
+
+  def archived?
+    @archived == true
   end
 end
 
@@ -17,6 +22,11 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string :title
   end
 end
+
+Post.create!(:title => "Post 1")
+Post.create!(:title => "Post 2")
+Post.create!(:title => "Post 3")
+Post.create!(:title => "Post 4")
 
 class TestJob
   def self.perform
