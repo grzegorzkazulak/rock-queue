@@ -11,7 +11,7 @@ describe "Worker" do
 
     Post.stub!(:find).and_return(post_mock)
     @rq.push Post, 1, :archive
-    mock.should_recieve(:archive)
+    post_mock.should_receive(:archive)
     @worker.work(0)
   end
 end

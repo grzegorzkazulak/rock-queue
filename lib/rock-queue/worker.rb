@@ -16,7 +16,7 @@ module RockQueue
     
     # Main worker loop where all jobs are beeing pulled of the queue. 
     # This is also a place where every job starts and ends it's lifecycle.
-    def work
+    def work(interval = 5)
       RockQueue::Base.logger.info "=> Worker ready. Hold your horses!"
       loop do
         ActiveRecord::Base.verify_active_connections!
@@ -38,6 +38,7 @@ module RockQueue
             end
           end
         end
+        break if interval == 0
       end
     end
  
