@@ -47,7 +47,7 @@ module RockQueue
     end    
     
     def clear
-      Resque.redis.del "queue:default"
+      Resque.redis.flushall
     end
   end
 end
