@@ -1,17 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-RockQueue::Config.settings do |config|
-  config.adapter = :resque
-  config.host = 'localhost'
-  config.port = '6379'
-end
+RockQueue.setup(
+  :adapter => :resque,
+  :server  => 'localhost',
+  :port    => 6379
+)
 
 describe "Object with ActiveRecordHelper" do
   before(:each) do
     @post = Post.create(:title => "Test")
-    s = RockQueue::Config.settings
-    @rq = RockQueue::Base.new s.adapter, :server => s.host, :port => s.port
-    @rq.clear
+    RockQueue.clear
   end
 
   it "class responds to .perform" do
@@ -20,6 +18,6 @@ describe "Object with ActiveRecordHelper" do
 
   it "calls a method asynchronously" do
     @post.async(:archive)
-    @rq.pop.should == [Post, [[@post.id, "archive"]]]
+    RockQueue.pop.should == [Post, [[@post.id, "archive"]]]
   end
 end

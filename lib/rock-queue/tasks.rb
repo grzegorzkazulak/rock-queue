@@ -11,7 +11,7 @@ namespace :rock_queue do
   task :work do
     worker = RockQueue::Worker.new
     worker.verbose = ENV['VERBOSE']
-    RockQueue::Base.logger.info "=> Rock-queue worker initialized (#{worker})"
+    RockQueue.logger.info "=> Rock-queue worker initialized (#{worker})"
     pid = fork do
       File.open(file_path, "wb") { |f| f.write(Process.pid) }
       worker.work

@@ -2,7 +2,9 @@ require File.dirname(__FILE__ ) + '/spec_helper'
 
 describe "Worker" do
   before(:each) do
-    @rq = RockQueue::Base.new :resque, :server => 'localhost', :port => 6379
+    RockQueue.setup :adapter => :resque,
+                    :server  => 'localhost',
+                    :port    => 6379
     @worker = RockQueue::Worker.new
   end
 
@@ -10,7 +12,7 @@ describe "Worker" do
     post_mock = mock("Post")
 
     Post.stub!(:find).and_return(post_mock)
-    @rq.push Post, 1, :archive
+    RockQueue.push Post, 1, :archive
     post_mock.should_receive(:archive)
     @worker.work(0)
   end

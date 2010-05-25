@@ -1,7 +1,5 @@
 module RockQueue
-  
   class EmailNotifier < AbstractNotifier
-  
     def initialize(config)
       $server_config = config
       
@@ -17,14 +15,13 @@ module RockQueue
     
     # Notify by email  
     def update(error)
-
       begin
         require 'mail'
       rescue
-        RockQueue::Base.logger.error "You need `mail` gem to use the Email Notifier"
+        RockQueue.logger.error "You need `mail` gem to use the Email Notifier"
       end
       
-      RockQueue::Base.logger.info "Sending e-mail message: #{error.message}"
+      RockQueue.logger.info "Sending e-mail message: #{error.message}"
 
       Mail.deliver do
           from $server_config[:from]
@@ -32,8 +29,6 @@ module RockQueue
        subject "Processing error - '#{error.message}'"
           body error.backtrace.join("\n")
       end
-      
     end
-
   end
 end
