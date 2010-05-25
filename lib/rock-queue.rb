@@ -38,6 +38,10 @@ module RockQueue
     @logger = Logger.new(options[:log].nil? ? STDOUT : options[:log])
   end
 
+  def disconnect
+    @adapter = nil
+  end
+
   # return current connection
   def adapter
     if @adapter
