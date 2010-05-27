@@ -41,6 +41,7 @@ And that's it. You are ready to put your objects onto the queue.
 	
 	class Person << ActiveRecord::Base
 		include RockQueue::ActiveRecordHelper
+    QUEUE = :default
 	
 		def test
 			sleep(10)
@@ -67,7 +68,7 @@ You can perform async on any AR object just by passing the actual method name as
 				:port   => config.port
 	}  
 	
-	@queue.receive do |item|
+	@queue.receive(:default) do |item|
 		# Do any operation on the retreived item
 		p item
 	end
@@ -83,7 +84,7 @@ To setup a worker you have to require following code in your Rakefile
 
 Then just run:
 
-	rake environment rock_queue:work
+	$ rake environment rock_queue:work QUEUE=*
 
 ### Notifications.
 	

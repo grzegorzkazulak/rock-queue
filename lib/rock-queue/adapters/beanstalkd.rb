@@ -11,20 +11,34 @@ module RockQueue
     attr_reader :obj
     
     def initialize(options = {})
-      @obj = Beanstalk::Pool.new(["#{options[:server]}:#{options[:port]}"])
+      @options = options
+      @addr = "#{options[:server]}:#{options[:port]}"
+      @obj = Beanstalk::Pool.new([@addr])
     end
   
-    def push(value, *args)
+    def push(queue, value, *args)
+      @obj.send(:send_to_rand_conn, :use, queue)
       @obj.put [value.name, args].to_yaml 
     end
 
-    def pop
+    def pop(queue)
+      @obj.send(:send_to_rand_conn, :use, queue)
       r = YAML.load(@obj.reserve.body)
       r[0] = Kernel.const_get(r[0])
       r
     end 
 
     def clear
+      system "pkill beanstalkd"
+      system "beanstalkd -d -p #{@options[:port]}"
+    end
+
+    def size(queue)
+      @obj.stats_tube(queue)["current-jobs-ready"]
+    end
+
+    def queues
+      @obj.list_tubes[@addr].map(&:to_sym)
     end
   end
 end

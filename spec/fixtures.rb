@@ -32,3 +32,9 @@ class TestJob
   def self.perform
   end
 end
+
+class BadJob
+  def self.perform
+    fail
+  end
+end

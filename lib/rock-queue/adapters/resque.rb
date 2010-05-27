@@ -14,13 +14,14 @@ module RockQueue
     # Contructor of Resque adapter
     def initialize(options)
       Resque.redis = "#{options[:server]}:#{options[:port]}"
+      Resque.redis.sadd(:queues, :default)
     end
     
     # Push item from Resque queue
-    def push(value, args)
+    def push(queue, value, args)
       if !defined?(value.queue)
         value.class_eval do 
-          @queue = :default
+          @queue = queue
         end
       end
       Resque.enqueue value, args
@@ -37,8 +38,8 @@ module RockQueue
     end    
 
     # Retrieve item from Resque queue
-    def pop
-      job = Resque.reserve :default
+    def pop(queue)
+      job = Resque.reserve(queue)
       [job.payload_class, job.args] if job   
     end 
     
@@ -49,6 +50,15 @@ module RockQueue
     
     def clear
       Resque.redis.flushall
+      Resque.redis.sadd(:queues, :default)
+    end
+
+    def size(queue)
+      Resque.size(queue)
+    end
+
+    def queues
+      Resque.queues.sort.map(&:to_sym)
     end
   end
 end

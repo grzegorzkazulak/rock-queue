@@ -5,6 +5,7 @@ module RockQueue
     
     # Initialize connection to queue server
     def initialize(*queues)
+      raise ArgumentError, "No queues specified" if queues.size == 0
       @queues = queues
       RockQueue.logger.info "=> Initializing..."
     end
@@ -13,10 +14,13 @@ module RockQueue
     # This is also a place where every job starts and ends it's lifecycle.
     def work(interval = 5)
       RockQueue.logger.info "=> Worker ready. Hold your horses!"
+      stop = false
       loop do
         ActiveRecord::Base.verify_active_connections!
-        RockQueue.receive do |queue|
-          if queue
+        queues.each do |qname|
+          obj, args = RockQueue.pop(qname)
+          if obj
+            queue = QueueObject.new(obj, args)
             begin
               # code that actually performs the action
               args = queue.args.first
@@ -31,11 +35,19 @@ module RockQueue
                 retry
               end
             end
+            stop = false
+          else
+            stop = true if interval == 0
           end
         end
-        break if interval == 0
+        break if stop
       end
     end
- 
+
+    # Returns a list of queues
+    # A single '*' means all queues
+    def queues
+      @queues[0] == "*" ? RockQueue.queues : @queues
+    end
   end
 end

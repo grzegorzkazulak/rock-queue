@@ -18,6 +18,6 @@ describe "Object with ActiveRecordHelper" do
 
   it "calls a method asynchronously" do
     @post.async(:archive)
-    RockQueue.pop.should == [Post, [[@post.id, "archive"]]]
+    RockQueue.pop(:default).should == [Post, [[@post.id, "archive"]]]
   end
 end

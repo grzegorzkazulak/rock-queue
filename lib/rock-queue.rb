@@ -51,8 +51,8 @@ module RockQueue
     end
   end
 
-  def push(value, *args)
-    adapter.push(value, args)
+  def push(queue, value, *args)
+    adapter.push(queue, value, args)
   end
 
   def logger
@@ -65,9 +65,9 @@ module RockQueue
   #   items from the queue as they become available)
   # All calls to the queueing server are made through the previosuly
   # selecte adaper.
-  def receive
+  def receive(queue)
     if block_given?
-      obj, args = @adapter.pop
+      obj, args = @adapter.pop(queue)
       yield QueueObject.new(obj, args) if obj
     else
       raise 'No block given'

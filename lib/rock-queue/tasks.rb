@@ -9,7 +9,7 @@ namespace :rock_queue do
   file_path = "#{RAILS_ROOT}/tmp/pids/rock-queue.pid"
 
   task :work do
-    worker = RockQueue::Worker.new
+    worker = RockQueue::Worker.new(env["QUEUES"])
     worker.verbose = ENV['VERBOSE']
     RockQueue.logger.info "=> Rock-queue worker initialized (#{worker})"
     pid = fork do
