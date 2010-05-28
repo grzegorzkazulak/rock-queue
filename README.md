@@ -39,7 +39,7 @@ And that's it. You are ready to put your objects onto the queue.
 
 	# Set your settings here (like in the first example)
 	
-	class Person << ActiveRecord::Base
+	class Person < ActiveRecord::Base
 		include RockQueue::ActiveRecordHelper
     QUEUE = :default
 	
@@ -53,8 +53,8 @@ And that's it. You are ready to put your objects onto the queue.
 	
 
 Following code will let you call the `test` method asynchronously. In other words will put it onto the queue and let your worker(s) do the job. 
-You can perform async on any AR object just by passing the actual method name as a symbol.
-	
+You can perform async on any AR object just by passing the actual method name as a symbol. The QUEUE constant tells RockQueue on which queue the job should be put. Without this constant the job will be put on 'default' queue.
+
 ### Retrieving objects by hand
 
 	require 'rubygems'
@@ -84,7 +84,10 @@ To setup a worker you have to require following code in your Rakefile
 
 Then just run:
 
-	$ rake environment rock_queue:work QUEUE=*
+	$ rake environment rock_queue:work QUEUE=high,low
+
+QUEUE param speficies which queues worker should process and in which order.
+* means all available queues.
 
 ### Notifications.
 	
