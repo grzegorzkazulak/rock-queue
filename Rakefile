@@ -5,7 +5,7 @@ require 'spec/rake/spectask'
 require 'date'
 $LOAD_PATH.unshift 'lib'
 require 'rock-queue/tasks'
- 
+
 GEM = "rock-queue"
 GEM_VERSION = "0.2.0"
 AUTHOR = "Grzegorz Kazulak"

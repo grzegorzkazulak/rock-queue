@@ -47,7 +47,7 @@ module RockQueue
     if @adapter
       @adapter
     else
-      raise RuntimeError, "RockQueue is not connectet. Use setup"
+      raise RuntimeError, "RockQueue is not connected. Use setup"
     end
   end
 
@@ -81,6 +81,6 @@ module RockQueue
 
   # Calling adapter method
   def method_missing(sym, *args, &block)
-    @adapter.send sym, *args, &block
+    adapter.send sym, *args, &block
   end
 end
