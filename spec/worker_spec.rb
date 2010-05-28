@@ -8,8 +8,9 @@ describe "Worker" do
     RockQueue.clear
   end
 
-  it "fails without queues" do
-    lambda { RockQueue::Worker.new }.should raise_error
+  it "processes default queue when no is specified" do
+    @worker = RockQueue::Worker.new
+    @worker.queues.should == [:default]
   end
 
   it "works" do

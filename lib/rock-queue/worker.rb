@@ -5,7 +5,7 @@ module RockQueue
     
     # Initialize connection to queue server
     def initialize(*queues)
-      raise ArgumentError, "No queues specified" if queues.size == 0
+      queues = [:default] if queues.size == 0
       @queues = queues
       RockQueue.logger.info "=> Initializing..."
     end
