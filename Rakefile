@@ -9,11 +9,12 @@ require 'rock-queue/tasks'
 GEM = "rock-queue"
 GEM_VERSION = "0.3.0"
 SUMMARY = "A unified interface for various messaging queues"
-AUTHORS = ["Grzegorz Kazulak"]
+AUTHORS = ["Grzegorz Kazulak", "Wojtek Mach", "Piotr Chmolowski", "Daniel Chruściak"]
 EMAIL = "gregorz.kazulak@gmail.com"
 HOMEPAGE = "http://github.com/grzegorzkazulak/rock-queue"
 
 begin
+  gem 'jeweler', '~> 1.4'
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = GEM
@@ -38,6 +39,7 @@ begin
     gem.extra_rdoc_files = ["LICENSE"]
   end
   Jeweler::GemcutterTasks.new
+  FileList['tasks/**/*.rake'].each { |task| import task }
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
