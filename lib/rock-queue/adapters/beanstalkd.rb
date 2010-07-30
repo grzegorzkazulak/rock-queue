@@ -29,7 +29,7 @@ module RockQueue
     end 
 
     def clear
-      system "pkill beanstalkd"
+      system "killall beanstalkd"
       system "beanstalkd -d -p #{@options[:port]}"
     end
 

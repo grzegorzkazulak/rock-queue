@@ -5,3 +5,4 @@ documentation/
 test.rb
 coverage/
 *.sw*
+.DS_Store
