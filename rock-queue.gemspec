@@ -5,10 +5,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rock-queue}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Grzegorz Kazulak"]
+  s.authors = ["Grzegorz Kazulak", "Wojtek Mach", "Piotr Chmolowski", "Daniel Chrusciak"]
   s.autorequire = %q{rock-queue}
   s.date = %q{2010-07-30}
   s.description = %q{A unified interface for various messaging queues}
