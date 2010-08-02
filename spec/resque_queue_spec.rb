@@ -14,7 +14,7 @@ describe "ResqueQueue" do
 
   it_should_behave_like "RockQueue adapter"
   
-  it "should register worker" do   
+  it "should register worker" do
     worker = RockQueue::Worker.new(:default)
     @adapter.register_worker(worker)
     Resque.redis.sismember(:workers, worker).should == true
