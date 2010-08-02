@@ -1,3 +1,9 @@
+begin
+  require 'mail'
+rescue
+  RockQueue.logger.error "You need `mail` gem to use the Email Notifier"
+end
+
 module RockQueue
   class EmailNotifier < AbstractNotifier
     def initialize(config)
@@ -15,12 +21,6 @@ module RockQueue
     
     # Notify by email  
     def update(error)
-      begin
-        require 'mail'
-      rescue
-        RockQueue.logger.error "You need `mail` gem to use the Email Notifier"
-      end
-      
       RockQueue.logger.info "Sending e-mail message: #{error.message}"
 
       Mail.deliver do

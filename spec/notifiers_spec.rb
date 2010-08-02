@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-require "mail"
-
 describe "Notifiers" do
   it "registers an observer" do
     notifiers = RockQueue::Notifiers.instance
