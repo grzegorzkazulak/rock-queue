@@ -26,7 +26,7 @@ module RockQueue
       end
       
       def async_at(method, time_to_run_at, *args)
-        RockQueue.push_at(self.class, time_to_run_at, method, id, *args)
+        RockQueue.push_at(self.class, time_to_run_at, id, method, *args)
       end
     end 
   end

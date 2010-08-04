@@ -34,7 +34,7 @@ describe "Object with ActiveRecordHelper" do
     
     Resque.delayed_queue_schedule_size.should == 1
     Resque.next_item_for_timestamp(time).should == {
-      "args"  => [["archive", @post.id]],
+      "args"  => [[@post.id, "archive"]],
       "class" => "Post",
       "queue" => "default"
     }
