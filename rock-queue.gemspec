@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rock-queue}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Grzegorz Kazulak", "Wojtek Mach", "Piotr Chmolowski", "Daniel Chrusciak"]
