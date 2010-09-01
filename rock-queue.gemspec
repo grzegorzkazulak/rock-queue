@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rock-queue}
-  s.version = "0.3.1"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Grzegorz Kazulak", "Wojtek Mach", "Piotr Chmolowski", "Daniel Chrusciak"]
   s.autorequire = %q{rock-queue}
-  s.date = %q{2010-07-30}
+  s.date = %q{2010-09-01}
   s.description = %q{A unified interface for various messaging queues}
   s.email = %q{gregorz.kazulak@gmail.com}
   s.extra_rdoc_files = [
@@ -45,6 +45,7 @@ Gem::Specification.new do |s|
      "spec/beanstalkd_spec.rb",
      "spec/email_notifier_spec.rb",
      "spec/fixtures.rb",
+     "spec/notifiers_spec.rb",
      "spec/queue_object_spec.rb",
      "spec/resque_queue_spec.rb",
      "spec/rock_queue_spec.rb",

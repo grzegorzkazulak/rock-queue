@@ -7,7 +7,7 @@ $LOAD_PATH.unshift 'lib'
 require 'rock-queue/tasks'
 
 GEM = "rock-queue"
-GEM_VERSION = "0.3.1"
+GEM_VERSION = "0.3.2"
 SUMMARY = "A unified interface for various messaging queues"
 AUTHORS = ["Grzegorz Kazulak", "Wojtek Mach", "Piotr Chmolowski", "Daniel Chrusciak"]
 EMAIL = "gregorz.kazulak@gmail.com"
