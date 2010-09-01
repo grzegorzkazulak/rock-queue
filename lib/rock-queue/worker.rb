@@ -16,6 +16,8 @@ module RockQueue
       RockQueue.logger.info "=> Worker ready. Hold your horses!"
       stop = false
       loop do
+        sleep(interval)
+        
         ActiveRecord::Base.verify_active_connections!
         queues.each do |qname|
           obj, args = RockQueue.pop(qname)
