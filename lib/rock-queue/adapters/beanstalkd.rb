@@ -29,7 +29,9 @@ module RockQueue
     end 
 
     def clear
-      system "killall beanstalkd"
+      kill_cmd = `which killall`.empty? ? "pkill" : "killall"
+      
+      system "#{kill_cmd} beanstalkd"
       system "beanstalkd -d -p #{@options[:port]}"
     end
 
