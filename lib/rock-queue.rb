@@ -19,6 +19,7 @@ module RockQueue
   autoload :NoClassError,             'rock-queue/errors'
   autoload :QueueingServerNotRunning, 'rock-queue/errors'
   autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
+  autoload :MongoMapperHelper,        'rock-queue/mongo_mapper_helper'
   
   extend self
 
