@@ -18,26 +18,20 @@ module RockQueue
     end
     
     # Push item from Resque queue
-    def push(queue, value, args)
-      if !defined?(value.queue)
-        value.class_eval do 
-          @queue = queue
-        end
-      end
-      Resque.enqueue value, args
+    def push(klass, *args)
+      Resque.enqueue klass, args
     end
     
     # Push items to Resque queue to be picked up by the worker on specified time
-    def push_at(value, time_to_run_at, *args)
-      if !defined?(value.queue)
-        value.class_eval do 
-          @queue = :default
-        end
-      end
-      
+    def push_at(klass, time_to_run_at, *args)
       raise "resque_scheduler is required" unless Resque.respond_to?(:enqueue_at)
-      Resque.enqueue_at time_to_run_at, value, args
+      Resque.enqueue_at time_to_run_at, klass, args
     end    
+    
+    def remove_delayed(klass, *args)
+      raise "resque_scheduler is required" unless Resque.respond_to?(:remove_delayed)
+      Resque.remove_delayed(klass, args)
+    end
 
     # Retrieve item from Resque queue
     def pop(queue)
