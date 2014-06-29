@@ -19,6 +19,7 @@ module RockQueue
   autoload :NoClassError,             'rock-queue/errors'
   autoload :QueueingServerNotRunning, 'rock-queue/errors'
   autoload :ActiveRecordHelper,       'rock-queue/active_record_helper'
+  autoload :MongoMapperHelper,        'rock-queue/mongo_mapper_helper'
   
   extend self
 
@@ -51,10 +52,6 @@ module RockQueue
     end
   end
 
-  def push(queue, value, *args)
-    adapter.push(queue, value, args)
-  end
-
   def logger
     @logger
   end
@@ -64,7 +61,7 @@ module RockQueue
   # - Pass a block to it (creates and endles loop that constantly pulls
   #   items from the queue as they become available)
   # All calls to the queueing server are made through the previosuly
-  # selecte adaper.
+  # selected adapter.
   def receive(queue)
     if block_given?
       obj, args = @adapter.pop(queue)
@@ -80,7 +77,7 @@ module RockQueue
   end
 
   # Calling adapter method
-  def method_missing(sym, *args, &block)
-    adapter.send sym, *args, &block
+  def method_missing(*args, &blk)
+    adapter.send *args, &blk
   end
 end

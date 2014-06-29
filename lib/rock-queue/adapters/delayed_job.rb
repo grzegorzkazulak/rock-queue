@@ -13,8 +13,8 @@ module RockQueue
     def initialize(options = {})
     end
     
-    def push(value, options)
-      Delayed::Job.enqueue value
+    def push(klass, options)
+      Delayed::Job.enqueue klass
     end
   
     def pop

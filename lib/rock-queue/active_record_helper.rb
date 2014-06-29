@@ -22,11 +22,15 @@ module RockQueue
     
     module InstanceMethods 
       def async(method, *args)
-        RockQueue.push(self.class.queue, self.class, id, method, *args)
+        RockQueue.push(self.class, id, method, *args)
       end
       
       def async_at(method, time_to_run_at, *args)
         RockQueue.push_at(self.class, time_to_run_at, id, method, *args)
+      end
+      
+      def remove_delayed(method, *args)
+        RockQueue.remove_delayed(self.class, id, method, *args)
       end
     end 
   end

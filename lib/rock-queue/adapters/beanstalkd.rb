@@ -16,9 +16,9 @@ module RockQueue
       @obj = Beanstalk::Pool.new([@addr])
     end
   
-    def push(queue, value, *args)
-      @obj.send(:send_to_rand_conn, :use, queue)
-      @obj.put [value.name, args].to_yaml 
+    def push(klass, *args)
+      @obj.send(:send_to_rand_conn, :use, klass.queue)
+      @obj.put [klass.name, args].to_yaml 
     end
 
     def pop(queue)
